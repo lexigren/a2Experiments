@@ -12,8 +12,12 @@ export class DecoratorsComponent {
 
   constructor() {
     let number = new Number(42);
-    number.subtract(34);
-    number.add(1);
+    console.log("subtracting:", number.subtract(34));
+    console.log("adding:", number.add(1));
+
+    console.log("finalvalue: "+number);
+
+    console.log("num:", number);
   }
 
 }
