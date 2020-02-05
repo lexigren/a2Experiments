@@ -1,19 +1,25 @@
 window.Stripo = window.Stripo || {};
 if (!window.Stripo.loaded) {
-    function sp(k,v){Stripo[k]=v};
+    function sp(k, v) {
+        Stripo[k] = v
+    };
     window.StripoPerfTraceEnabled = !!localStorage.getItem('stripo_perf');
-    window.StripoPerfTrace = function(m){
+    window.StripoPerfTrace = function (m) {
         window.StripoPerfTraceEnabled && console.log('[Perf] [' + performance.now() + '] ' + m);
     };
     window.StripoPerfTrace('"stripo.js" starting scrips loading');
+
     function init(options, beforeInitCallback) {
         if (window.StripoApi) {
             beforeInitCallback && beforeInitCallback();
             window.StripoApi.init(options);
         } else {
-            setTimeout(function() {init(options, beforeInitCallback)}, 100);
+            setTimeout(function () {
+                init(options, beforeInitCallback)
+            }, 100);
         }
     }
+
     sp('init', init);
     var curScript = document.currentScript || document.getElementById('stripoScript');
     if (!curScript) {
@@ -27,7 +33,7 @@ if (!window.Stripo.loaded) {
         window.Stripo.skipResources = window.Stripo.skipResources || [];
 
         function addResource(n, k, useBp) {
-            for (var i=0;i<window.Stripo.skipResources.length;i++) {
+            for (var i = 0; i < window.Stripo.skipResources.length; i++) {
                 if (n.endsWith(window.Stripo.skipResources[i])) {
                     return;
                 }
@@ -46,9 +52,11 @@ if (!window.Stripo.loaded) {
         }
         (!window.$LAB) && addResource('assets/js/LAB.min.js', 'scripts0', true);
         (!window._babelPolyfill) && addResource('assets/imageeditor/babel_polyfill.js', 'scripts1', true);
+        console.log("%ccheck zone", "font-weight:bold;color:red;font-size:25px;");
         console.log("window.Zone", window.Zone);
         console.log("curScript.hasAttribute('angular-app')", curScript.hasAttribute('angular-app'));
         console.log("add zone:", (!window.Zone && !curScript.hasAttribute('angular-app')));
+        console.log("%c-----------------------", "font-weight:bold;color:red;font-size:25px;");
         (!window.Zone && !curScript.hasAttribute('angular-app')) && addResource('assets/imageeditor/zone.min.js', 'scripts1', true);
         addResource('stripodeps.js', 'scripts2', true);
         addResource('assets/imageeditor/scripts.min.js', 'scripts3', true);
@@ -57,6 +65,7 @@ if (!window.Stripo.loaded) {
             window.Stripo['scripts5'] = window.Stripo.externalScripts;
             sp('scriptsMaxOrder', 5);
         }
+
         function lst(arr) {
             if (arr.length) {
                 var j = document.createElement('link');
@@ -73,10 +82,12 @@ if (!window.Stripo.loaded) {
                 lst(arr);
             }
         }
+
         lst(window.Stripo.styles);
+
         function ls(cb) {
             var l = $LAB;
-            for (var scriptOrder=1; scriptOrder<=window.Stripo.scriptsMaxOrder; scriptOrder++) {
+            for (var scriptOrder = 1; scriptOrder <= window.Stripo.scriptsMaxOrder; scriptOrder++) {
                 if (window.Stripo['scripts' + scriptOrder]) {
                     for (var i = 0; i < window.Stripo['scripts' + scriptOrder].length; i++) {
                         l = l.script(window.Stripo['scripts' + scriptOrder][i]);
@@ -86,23 +97,26 @@ if (!window.Stripo.loaded) {
                 }
             }
         }
+
         var j = document.createElement('script');
-        j.onload = function() {
-            ls(function() {
+        j.onload = function () {
+            ls(function () {
                 sp('loaded', true);
                 window.StripoPerfTrace('"stripo.js" loaded all scripts');
             });
         };
         j.src = window.Stripo['scripts0'][0];
         window.Stripo.spn.insertBefore(j, window.Stripo.sns);
+
         function adf(cb) {
             if (window.StripoApi) {
                 window.StripoApi.applyDefaultStyles();
                 cb && cb();
             } else {
-                setTimeout(adf.bind(this,cb), 100);
+                setTimeout(adf.bind(this, cb), 100);
             }
         }
+
         sp('applyDefaultStyles', adf);
     }
 }
