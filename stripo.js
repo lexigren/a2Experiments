@@ -48,7 +48,7 @@ if (!window.Stripo.loaded) {
         (!window._babelPolyfill) && addResource('assets/imageeditor/babel_polyfill.js', 'scripts1', true);
         console.log("window.Zone", window.Zone);
         console.log("curScript.hasAttribute('angular-app')", curScript.hasAttribute('angular-app'));
-        console.log("add zone:", (!window.Zone && !curScript.hasAttribute('angular-app')))
+        console.log("add zone:", (!window.Zone && !curScript.hasAttribute('angular-app')));
         (!window.Zone && !curScript.hasAttribute('angular-app')) && addResource('assets/imageeditor/zone.min.js', 'scripts1', true);
         addResource('stripodeps.js', 'scripts2', true);
         addResource('assets/imageeditor/scripts.min.js', 'scripts3', true);
